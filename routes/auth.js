@@ -41,8 +41,8 @@ router.post("/register", async function (req, res, next) {
         let token = jwt.sign({username}, SECRET_KEY);
         console.log(`Token = ${token}`);
 
-        //TODO:
-        //User.updateLoginTimestamp(username);
+        
+        user.updateLoginTimestamp(username);
 
         return res.json({token}); //to be stored by client locally
 
