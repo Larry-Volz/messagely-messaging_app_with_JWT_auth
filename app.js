@@ -25,8 +25,7 @@ const userRoutes = require("./routes/users");
 const messageRoutes = require("./routes/messages");
 
 app.use("/auth", authRoutes);
-//TODO: SET UP AND UN-COMMENT
-// app.use("/users", userRoutes);
+app.use("/users", userRoutes);
 
 //TODO: SET UP AND UN-COMMENT
 // app.use("/messages", messageRoutes);
