@@ -7,6 +7,7 @@ const { SECRET_KEY } = require("../config");
 
 function authenticateJWT(req, res, next) {
   try {
+    //these variables are basically global since passed through app.use()
     const tokenFromBody = req.body._token;
     const payload = jwt.verify(tokenFromBody, SECRET_KEY);
     req.user = payload; // create a current user
@@ -30,6 +31,7 @@ function ensureLoggedIn(req, res, next) {
 
 function ensureCorrectUser(req, res, next) {
   try {
+    //username from payload = username from request?
     if (req.user.username === req.params.username) {
       return next();
     } else {

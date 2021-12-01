@@ -1,7 +1,7 @@
 /** Common config for message.ly */
 
 // read .env files and make environmental variables
-
+// details at: https://zetcode.com/javascript/dotenv/
 require("dotenv").config();
 
 const DB_URI = (process.env.NODE_ENV === "test")
@@ -17,4 +17,4 @@ module.exports = {
   DB_URI,
   SECRET_KEY,
   BCRYPT_WORK_FACTOR,
-};
+}; 
