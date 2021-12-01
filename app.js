@@ -26,9 +26,7 @@ const messageRoutes = require("./routes/messages");
 
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-
-//TODO: SET UP AND UN-COMMENT
-// app.use("/messages", messageRoutes);
+app.use("/messages", messageRoutes);
 
 /** 404 handler */
 

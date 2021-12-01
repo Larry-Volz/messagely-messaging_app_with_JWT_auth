@@ -1,3 +1,9 @@
+const Router = require("express").Router;
+const router = new Router();
+const Message = require("../models/message");
+const {ensureLoggedIn, ensureCorrectUser} = require("../middleware/auth");
+const ExpressError = require("../expressError");
+
 /** GET /:id - get detail of message.
  *
  * => {message: {id,
@@ -19,6 +25,24 @@
  *
  **/
 
+//QUESTION: WHY IS THIS UPDATING THE DB PROPERLY BUT NOT RETURNING THE CORRECT JSON?
+//IT IS ONLY RETURNING {"message":""} 
+router.post("/", ensureLoggedIn, async (req, res, next) => {
+    try {
+        console.log(`req.user.username from Message.create post route is ${req.user.username}`);
+        let result = Message.create({
+            from_username: req.user.username,
+            to_username: req.body.to_username,
+            body: req.body.body
+        });
+
+        return res.json({message : result});
+
+    } catch(err) {
+        next(err);
+    }
+})
+
 
 /** POST/:id/read - mark message as read:
  *
@@ -28,3 +52,4 @@
  *
  **/
 
+ module.exports = router;
