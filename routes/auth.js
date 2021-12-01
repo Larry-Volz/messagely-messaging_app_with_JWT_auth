@@ -12,6 +12,20 @@ const jwt = require("jsonwebtoken");
  *
  **/
 
+router.post("/login", async (req, res, next)=>{
+    try {
+        const { username, password } = req.body;
+        const validated = user.authenticate(username, password);
+        if(validated){
+            let token = jwt.sign({ username }, SECRET_KEY);
+            return res.json({ token });
+        }
+
+    } catch(err) {
+        next(err);
+    }
+});
+
 
 /** POST /register - register user: registers, logs in, and returns token.
  *
@@ -21,6 +35,7 @@ const jwt = require("jsonwebtoken");
  */ 
 router.post("/register", async function (req, res, next) {
     try {
+        //get payload
         let { username } = await user.register(req.body);  
         //return token
         let token = jwt.sign({username}, SECRET_KEY);
@@ -29,7 +44,7 @@ router.post("/register", async function (req, res, next) {
         //TODO:
         //User.updateLoginTimestamp(username);
 
-        return res.json({token});
+        return res.json({token}); //to be stored by client locally
 
     } catch (err) {
         return next(err);
