@@ -19,6 +19,7 @@ router.get("/", ensureLoggedIn, async (req, res, next) =>{
 })
 
 
+
 /** GET /:username - get detail of users.
  *
  * => {user: {username, first_name, last_name, phone, join_at, last_login_at}}
@@ -47,6 +48,18 @@ router.get("/:username", ensureLoggedIn, async (req, res, next) => {
  *
  **/
 
+ router.get("/:username/to", ensureCorrectUser, async function (req, res, next) {
+    try {
+      let messages = await User.messagesTo(req.params.username);
+      return res.json({messages});
+    }
+  
+    catch (err) {
+      return next(err);
+    }
+  });
+
+
 
 /** GET /:username/from - get messages from user
  *
@@ -68,5 +81,7 @@ router.get("/:username/from",ensureLoggedIn, async (req, res, next) => {
         next(err);
     }
 })
+
+
 
 module.exports = router;
